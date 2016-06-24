@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectAirhockey_Final.CSharp.Plugins", "KinectAirhockey_Final.CSharp.Plugins.csproj", "{2E5A182C-FCBA-7A10-C21D-3CCFE242AF8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectAirhockey_Final.CSharp", "KinectAirhockey_Final.CSharp.csproj", "{BA13BFDE-E733-E7F5-09D1-96F47F4BD233}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectAirhockey_Final.CSharp.Editor.Plugins", "KinectAirhockey_Final.CSharp.Editor.Plugins.csproj", "{4CD9CEE1-9028-A2D9-3C6E-AC3CACC8B2D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E5A182C-FCBA-7A10-C21D-3CCFE242AF8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E5A182C-FCBA-7A10-C21D-3CCFE242AF8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E5A182C-FCBA-7A10-C21D-3CCFE242AF8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E5A182C-FCBA-7A10-C21D-3CCFE242AF8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA13BFDE-E733-E7F5-09D1-96F47F4BD233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA13BFDE-E733-E7F5-09D1-96F47F4BD233}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA13BFDE-E733-E7F5-09D1-96F47F4BD233}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA13BFDE-E733-E7F5-09D1-96F47F4BD233}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CD9CEE1-9028-A2D9-3C6E-AC3CACC8B2D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CD9CEE1-9028-A2D9-3C6E-AC3CACC8B2D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CD9CEE1-9028-A2D9-3C6E-AC3CACC8B2D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CD9CEE1-9028-A2D9-3C6E-AC3CACC8B2D3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -7,8 +7,8 @@ public class addForceToPuk : MonoBehaviour {
     public GameObject puk;
     public GameObject stickObject;
     public Rigidbody stick;
+    Vector3 lastPos;
     Vector3 lastVelocity;
-
 
 
     void OnCollisionEnter(Collision collison)
@@ -20,9 +20,9 @@ public class addForceToPuk : MonoBehaviour {
             puk = GameObject.FindGameObjectWithTag("puk");
             lastVelocity = stick.velocity;
             Debug.Log("Puk was Hit");
-            //puk.GetComponent<Rigidbody>().AddForce(lastVelocity * 500);
+            puk.GetComponent<Rigidbody>().AddForce(lastVelocity * 500);
 
-            puk.GetComponent<Rigidbody>().AddForce(-transform.forward * 500, ForceMode.Acceleration);
+            //puk.GetComponent<Rigidbody>().AddForce(-transform.forward * 500, ForceMode.Acceleration);
             //puk.GetComponent<Rigidbody>().AddForce(lastVelocity * 1000);
             puk = null;
             

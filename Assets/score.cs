@@ -7,6 +7,6 @@ public class score : MonoBehaviour {
 	public Text scoreDisplay;
 
 	void OnTriggerEnter(Collider collider) {
-		scoreDisplay.text = (int.Parse(scoreDisplay.text) + 1) + "";
+		//scoreDisplay.text = (int.Parse(scoreDisplay.text) + 1) + "";
 	}	
 }

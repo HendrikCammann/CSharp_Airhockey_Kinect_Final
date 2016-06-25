@@ -82,6 +82,7 @@
     <Compile Include="Assets\KinectView\Scripts\InfraredSourceManager.cs" />
     <Compile Include="Assets\KinectView\Scripts\InfraredSourceView.cs" />
     <Compile Include="Assets\KinectView\Scripts\MultiSourceManager.cs" />
+    <Compile Include="Assets\Script\CollsionPlayerOne.cs" />
     <Compile Include="Assets\Script\DetectDepth.cs" />
     <Compile Include="Assets\Script\DetectJoints.cs" />
     <Compile Include="Assets\Script\OriginSetup.cs" />

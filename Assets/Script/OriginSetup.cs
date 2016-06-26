@@ -26,7 +26,7 @@ public class OriginSetup : MonoBehaviour {
     float distanceToHighestObstacle;
     int index, xCoord, yCoord = 0;
 
-    private int sizeDifferenceBetweenLargestAndMidObstacle = 50;
+    private int sizeDifferenceBetweenLargestAndMidObstacle = 90;
     private int sizeDiiferenceBetweenLargestAndLowObstacle = 150;
 
     float distance = 0;

@@ -1,4 +1,4 @@
-﻿using UnityEngine; 
+﻿using UnityEngine;
 using System.Collections;
 using Windows.Kinect;
 using System;
@@ -10,7 +10,8 @@ using System.Drawing.Printing;
 using System.Drawing.Text;
 using System.Drawing.Drawing2D;
 
-public class DetectDepth : MonoBehaviour {
+public class PlayerTwoMovement : MonoBehaviour
+{
 
     public GameObject DepthSrcManager;
     private MultiSourceManager depthManager;
@@ -33,7 +34,8 @@ public class DetectDepth : MonoBehaviour {
     private Renderer rend;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         if (DepthSrcManager == null)
         {
             Debug.Log("Assign Game Object with Depth Source Manager");
@@ -47,11 +49,13 @@ public class DetectDepth : MonoBehaviour {
         rend.enabled = false;
     }
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update()
+    {
         //Debug.Log(OriginSetup.setupFinished);
 
-        if (OriginSetup.setupFinished) {
+        if (OriginSetup.setupFinished)
+        {
             if (depthManager == null)
             {
                 return;
@@ -59,7 +63,7 @@ public class DetectDepth : MonoBehaviour {
 
             distancesOrig = depthManager.GetDepthData();
 
-            ushort[] distances = distancesOrig.Take(distancesOrig.Length / 2).ToArray();
+            ushort[] distances = distancesOrig.Skip(distancesOrig.Length / 2).ToArray();
 
             int height = 212;
             int width = 512;
@@ -69,8 +73,8 @@ public class DetectDepth : MonoBehaviour {
             int yCoord = 0;
             int index = 0;
 
-            for (int x = 50; x < width - 50; x++)
-                for (int y = 50; y < height; y++)
+            for (int x = 60; x < width - 60; x++)
+                for (int y = 0; y < height-60; y++)
                 {
                     if ((minValue > distances[y * width + x]) && (distances[y * width + x] != 0))
                     {
@@ -79,6 +83,7 @@ public class DetectDepth : MonoBehaviour {
                         xCoord = x;
                         yCoord = y;
                         timer = 0;
+                        //Debug.Log("(x,y)= " + "(" + xCoord + "," + yCoord + ")");
                     }
                 }
 
@@ -98,7 +103,7 @@ public class DetectDepth : MonoBehaviour {
                     if (distanceToLastX >= -10 && distanceToLastX <= 10 && distanceToLastY >= -10 && distanceToLastY <= 10)
                     {
                         findHandCounter++;
-                        Debug.Log(aktHandX + "," + aktHandY);
+                        //Debug.Log(aktHandX + "," + aktHandY);
                         //Debug.Log("counter up");
                     }
                 }
@@ -154,8 +159,8 @@ public class DetectDepth : MonoBehaviour {
             }
 
             */
-            xCoord = xCoord - 256;
-            yCoord = (yCoord - 212) * 2;
+            xCoord = (xCoord - 256) * -1;
+            yCoord = ((yCoord - 212) * 2 ) + 412;
 
             //Debug.Log("(x,y)= " + xCoord + "," + yCoord);
 
@@ -243,7 +248,7 @@ public class DetectDepth : MonoBehaviour {
             {
                 Vector3 oldPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
                 Vector3 newPos = new Vector3(xCoord, gameObject.transform.position.y, yCoord);
-                //Debug.Log("newPos: x=" + newPos.x + " z=" + newPos.z);
+                Debug.Log("newPos: x=" + newPos.x + " z=" + newPos.z);
                 timer += Time.deltaTime;
                 transform.position = Vector3.Lerp(oldPos, newPos, timer / latency);
             }
@@ -432,4 +437,5 @@ public class DetectDepth : MonoBehaviour {
         return returnArray;
     }
 }
+
 

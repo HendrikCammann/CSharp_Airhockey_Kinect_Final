@@ -12,7 +12,7 @@ public class OriginSetup : MonoBehaviour {
     private ushort[] distances;
     GameObject objToSpawn;
     public GameObject Prefab;
-    bool setupFinished = false;
+    public static bool setupFinished = false;
     bool foundHighestObstacle = false;
     bool foundMidObstacle = false;
     bool foundLowObstacle = false;
@@ -26,14 +26,13 @@ public class OriginSetup : MonoBehaviour {
     float distanceToHighestObstacle;
     int index, xCoord, yCoord = 0;
 
-    private int sizeDifferenceBetweenLargestAndMidObstacle = 60;
-    private int sizeDiiferenceBetweenLargestAndLowObstacle = 90;
+    private int sizeDifferenceBetweenLargestAndMidObstacle = 50;
+    private int sizeDiiferenceBetweenLargestAndLowObstacle = 150;
 
     float distance = 0;
     Vector3 PosLarge;
     Vector3 PosMid;
     Vector3 PosLow;
-
 
 
 
@@ -83,6 +82,8 @@ public class OriginSetup : MonoBehaviour {
                         }
                     }
 
+                Debug.Log(minValue);
+
                 if (!foundHighestObstacle && minValue != 10000)
                 {
                     float contrast = lastMinValue - minValue;
@@ -96,7 +97,6 @@ public class OriginSetup : MonoBehaviour {
                             distanceToHighestObstacle = minValue;
                             Vector3 PosHigh = new Vector3(xCoord, 0, yCoord);
                             Instantiate(Prefab, PosHigh, Quaternion.identity);
-                            Debug.Log("(x,y,z) = " + "(" + PosHigh.x + "," + PosHigh.y + "," + PosHigh.z + ") - Item1");
                             PosLarge = PosHigh;
                             foundHighestObstacle = true;
                             findObstacleCounter = 0;
@@ -146,7 +146,6 @@ public class OriginSetup : MonoBehaviour {
                     if (contrast >= -20 && contrast <= 20)
                     {
                         findObstacleCounter++;
-                        Debug.Log("up");
                         if (findObstacleCounter >= 20)
                         {
                             Vector3 PosHigh = new Vector3(xCoord, 0, yCoord);
@@ -226,8 +225,9 @@ public class OriginSetup : MonoBehaviour {
             */
             if(foundHighestObstacle && foundMidObstacle)
             {
-                alert.text = ("Hindernisse aufgestellt");
+                alert.text = ("Spielhand ins Feld halten");
                 setupFinished = true;
+                Debug.Log(setupFinished + " originsetup");
                 Destroy(GetComponent<OriginSetup>());
             }
         }

@@ -32,7 +32,6 @@ public class DetectDepth : MonoBehaviour {
 
     private Renderer rend;
 
-
     // Use this for initialization
     void Start () {
         if (DepthSrcManager == null)
@@ -50,382 +49,233 @@ public class DetectDepth : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        //Debug.Log("new");
-        if (depthManager == null)
-        {
-            return;
-        }
+        Debug.Log(OriginSetup.setupFinished);
 
-        distances = depthManager.GetDepthData();
-        int aktDist = distances[4000];
-
-        /*
-        for(int i = 0; i < distances.Length; i++)
-        {
-            if(distances[i] < 800 || distances[i] > 1400)
+        if (true) {
+            if (depthManager == null)
             {
-                distances[i] = 10000;
-            }
-        }
-        */
-
-        //int maxValue;
-        //int maxIndex;
-
-        // maxValue = (int) distances.Min();
-        // maxIndex = (int) distances.ToList().IndexOf(distances.Min());
-
-        int height = 424;
-        int width = 512;
-
-        float minValue = 10000;
-        int xCoord = 0;
-        int yCoord = 0;
-        int index = 0;
-
-        for (int x = 50; x < width-50; x++)
-            for (int y = 50; y < height - 50; y++)
-            {
-                if ((minValue > distances[y * width + x]) && (distances[y * width + x] != 0)) 
-                {
-                    minValue = distances[y * width + x];
-                    index = y * width + x;
-                    xCoord = x;
-                    yCoord = y;
-                    timer = 0;
-                }
+                return;
             }
 
-        
-        if(!foundHand)
-        {
-            int[] test = findPlayerHand(distances, index, minValue, width);
-            int aktHandX = test[0];
-            int aktHandY = test[1];
-            int aktIndex = test[2];
+            distances = depthManager.GetDepthData();
 
-            if (aktHandX != 1 && aktHandY != 0)
-            {
-                int distanceToLastX = aktHandX - findHandX;
-                int distanceToLastY = aktHandY - findHandY;
+            int height = 424;
+            int width = 512;
 
-                if (distanceToLastX >= -10 && distanceToLastX <= 10 && distanceToLastY >= -10 && distanceToLastY <= 10)
+            float minValue = 10000;
+            int xCoord = 0;
+            int yCoord = 0;
+            int index = 0;
+
+            for (int x = 50; x < width - 50; x++)
+                for (int y = 50; y < height - 50; y++)
                 {
-                    findHandCounter++;
-                    Debug.Log(aktHandX + "," + aktHandY);
-                    //Debug.Log("counter up");
-                } 
-            }
-
-            if(findHandCounter >= 25)
-            {
-                Debug.Log("Found HAND!");
-                Debug.Log(findHandX + "," + findHandY);
-                findHandIndex = aktIndex;
-                foundHand = true;
-                rend.enabled = true;
-            }
-
-            findHandX = aktHandX;
-            findHandY = aktHandY;
-        } 
-
-        /*
-        if(foundHand)
-        {
-            int[] test2 = trackPlayerHand(distances, findHandIndex, width);
-
-            int widthTracking = 512;
-            float minValueTracking = 10000;
-            int indexTracking = 0;
-
-            for (int i = 0; i < distances.Length; i++)
-            {
-                if(!test2.Contains(distances[i]))
-                {
-                    distances[i] = 10001;
-                } else
-                {
-                    if(minValueTracking > distances[i] && distances[i] != 0)
+                    if ((minValue > distances[y * width + x]) && (distances[y * width + x] != 0))
                     {
-                        minValueTracking = distances[i];
-                        indexTracking = i;
-                        xCoord = indexTracking%widthTracking;
-                        yCoord = indexTracking/widthTracking;
+                        minValue = distances[y * width + x];
+                        index = y * width + x;
+                        xCoord = x;
+                        yCoord = y;
                         timer = 0;
-                        findHandIndex = indexTracking;
+                    }
+                }
+
+
+            if (!foundHand)
+            {
+                int[] test = findPlayerHand(distances, index, minValue, width);
+                int aktHandX = test[0];
+                int aktHandY = test[1];
+                int aktIndex = test[2];
+
+                if (aktHandX != 1 && aktHandY != 0)
+                {
+                    int distanceToLastX = aktHandX - findHandX;
+                    int distanceToLastY = aktHandY - findHandY;
+
+                    if (distanceToLastX >= -10 && distanceToLastX <= 10 && distanceToLastY >= -10 && distanceToLastY <= 10)
+                    {
+                        findHandCounter++;
+                        Debug.Log(aktHandX + "," + aktHandY);
+                        //Debug.Log("counter up");
+                    }
+                }
+
+                if (findHandCounter >= 25)
+                {
+                    Debug.Log("Found HAND!");
+                    Debug.Log(findHandX + "," + findHandY);
+                    findHandIndex = aktIndex;
+                    foundHand = true;
+                    rend.enabled = true;
+                }
+
+                findHandX = aktHandX;
+                findHandY = aktHandY;
+            }
+
+            /*
+            if(foundHand)
+            {
+                int[] test2 = trackPlayerHand(distances, findHandIndex, width);
+
+                int widthTracking = 512;
+                float minValueTracking = 10000;
+                int indexTracking = 0;
+
+                for (int i = 0; i < distances.Length; i++)
+                {
+                    if(!test2.Contains(distances[i]))
+                    {
+                        distances[i] = 10001;
+                    } else
+                    {
+                        if(minValueTracking > distances[i] && distances[i] != 0)
+                        {
+                            minValueTracking = distances[i];
+                            indexTracking = i;
+                            xCoord = indexTracking%widthTracking;
+                            yCoord = indexTracking/widthTracking;
+                            timer = 0;
+                            findHandIndex = indexTracking;
+                        }
                     }
                 }
             }
-        }
 
-        if(xCoord != 0 && yCoord != 0)
-        {
-            allowMoving = true;
-        } else
-        {
-            allowMoving = false;
-        }
-
-        */
-        xCoord = xCoord - 256;
-        yCoord = (yCoord - 212) * 2;
-
-        //Debug.Log("(x,y)= " + xCoord + "," + yCoord);
-
-        if (xCoord < -230)
-        {
-            xCoord = -230;
-        }
-
-        if(xCoord > 230)
-        {
-            xCoord = 230;
-        }
-
-        if(yCoord < -350)
-        {
-            yCoord = -350;
-        }
-
-        if(yCoord > 350)
-        {
-            yCoord = 350;
-        }
-
-        //y-Coord
-        // int yCoord = (int)(maxIndex / width);
-  
-        //x-Coord
-        // int xCoord = (int)(maxIndex % width);
-        // Debug.Log("(x,y)= " + xCoord + "," + yCoord);
-        //Debug.Log("y= " + yCoord);
-        int xCoordOffset = 0;
-        int yCoordOffset = 0;
-
-        xCoordOffset = (xCoord - lastXcoord);
-        yCoordOffset = (yCoord - lastYcoord);
-        //Debug.Log("xOffset = " + xCoordOffset);
-        //Debug.Log("yOffset = " + yCoordOffset);
-
-        if (distances == null)
-        {
-            return;
-        }
-
-        /*
-        bool thresholdBottomBool = false;
-        bool thresholdTopBool = false;
-
-        //Check if Offset is big enough - Rauschunterdrückung
-        if (xCoordOffset > thresholdBottom || xCoordOffset < (thresholdBottom * -1) || yCoordOffset > thresholdBottom || yCoordOffset < (thresholdBottom * -1))
-        {
-            thresholdBottomBool = true;
-        }
-
-        //Check if Offest is not too large 
-        if ((xCoordOffset < thresholdTop && (xCoordOffset > (thresholdTop * -1))) && (yCoordOffset < thresholdTop && (yCoordOffset > (thresholdTop * -1))))
-        {
-            thresholdTopBool = true;
-        }
-
-        //if is in between thresholds
-        if (thresholdTopBool && thresholdBottomBool)
-        {
-            lastXcoord = xCoord;
-            lastYcoord = yCoord;
-            //Debug.Log(xCoordOffset + " xOffset");
-            Debug.Log(yCoordOffset + " yOffset");
-            timer = 0;
-            //Debug.Log("Timer reset");
-        }
-        */
-
-
-        /*
-        int offset = (lastDist - aktDist) * 2;
-        if(offset > 400)
-        {
-            offset = 500;
-        }
-
-        lastDist = aktDist;
-        */
-        //Debug.Log(offset);
-
-        if (allowMoving)
-        {
-            Vector3 oldPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
-            Vector3 newPos = new Vector3(xCoord, gameObject.transform.position.y, yCoord);
-            //Debug.Log("newPos: x=" + newPos.x + " z=" + newPos.z);
-            timer += Time.deltaTime;
-            transform.position = Vector3.Lerp(oldPos, newPos, timer / latency);
-        }
-        /*
-        //Vector3 newPos = new Vector3(gameObject.transform.position.x + xCoordOffset, 0, gameObject.transform.position.z + yCoordOffset);
-        float newZCoord = gameObject.transform.position.z + (xCoordOffset * 2);
-        if(newZCoord > 310 || newZCoord < -310)
-        {
-            if(newZCoord >= 0)
+            if(xCoord != 0 && yCoord != 0)
             {
-                newZCoord = 310;
-            }
-            else
+                allowMoving = true;
+            } else
             {
-                newZCoord = -310;
-            }
-            //Debug.Log("yOffset FIX!");
-        }
-        */
-        /*
-        if (thresholdTopBool && thresholdBottomBool)
-        {
-            //gameObject.transform.position = Vector3.Lerp(oldPos, newPos, latency * Time.deltaTime);
-            //gameObject.transform.position = Vector3.Lerp(oldPos, newPos, 2);
-            //gameObject.transform.position = Vector3.MoveTowards(oldPos, newPos, latency * Time.deltaTime);
-            //gameObject.transform.position = newPos;
-            timer += Time.deltaTime;
-            Debug.Log("Lerping");
-            //Debug.Log(Time.deltaTime + " delta");
-            //Debug.Log(timer + " timer");
-            transform.position = Vector3.Lerp(oldPos, newPos, timer / latency);
-        }
-        */
-    }
-
-    public int[] checkForContrast(int indexOfLargestInArray, int largestInArray, int width, ushort[]array)
-    {
-        bool inArrayBoundsFirst = true;
-        bool inArrayBoundsSecond = true;
-        bool inArrayBoundsThird = true;
-        int indexForTest = indexOfLargestInArray;
-        int xValueInPicUpwards = 0;
-        int xValueInPicDownwards = 0;
-        int xValueInPicLeft = 0;
-        int[] returnArray = null;
-
-        while (inArrayBoundsFirst)
-        {
-            indexForTest = indexForTest - width;
-
-            if (indexForTest < 0)
-            {
-                inArrayBoundsFirst = false;
-                break;
+                allowMoving = false;
             }
 
-            int aktValue = array[indexForTest];
-            int contrast = largestInArray - aktValue;
+            */
+            xCoord = xCoord - 256;
+            yCoord = (yCoord - 212) * 2;
 
-            if(contrast > 200)
+            //Debug.Log("(x,y)= " + xCoord + "," + yCoord);
+
+            if (xCoord < -230)
             {
-                xValueInPicUpwards = indexForTest;
-                break;
-            }
-        }
-
-        while(inArrayBoundsSecond)
-        {
-            indexForTest = indexForTest + width;
-
-            if(indexForTest > array.Length)
-            {
-                inArrayBoundsSecond = false;
-                break;
+                xCoord = -230;
             }
 
-            if(indexForTest > 217088)
+            if (xCoord > 230)
             {
-                indexForTest = 217087;
+                xCoord = 230;
             }
 
-            int aktValue2 = array[indexForTest];
-            int contrast2 = largestInArray - aktValue2;
-
-            if(contrast2 > 200)
+            if (yCoord < -350)
             {
-                xValueInPicDownwards = indexForTest;
-                break;
-            }
-        }
-
-        Debug.Log(xValueInPicDownwards + "Down");
-        Debug.Log(xValueInPicUpwards + "Up");
-
-        double indexOfNumberInbetweenConstrastDropsDouble =(xValueInPicDownwards + xValueInPicUpwards) / 2;
-
-        Debug.Log(indexOfNumberInbetweenConstrastDropsDouble + " indexDropsDouble");
-
-        int indexOfNumerInbetweenConstrastDrops = (int) Math.Ceiling(indexOfNumberInbetweenConstrastDropsDouble);
-
-        double helper = indexOfNumerInbetweenConstrastDrops / 2;
-        int rowInPicture = (int)Math.Floor(helper);
-
-        while(inArrayBoundsThird)
-        {
-            indexOfNumerInbetweenConstrastDrops = indexOfNumerInbetweenConstrastDrops - 1;
-            if(indexOfNumerInbetweenConstrastDrops% width == 0)
-            {
-                inArrayBoundsThird = false;
-                break;
+                yCoord = -350;
             }
 
-            if(indexOfNumerInbetweenConstrastDrops > 217088)
+            if (yCoord > 350)
             {
-                indexOfNumerInbetweenConstrastDrops = 217087;
+                yCoord = 350;
             }
 
-            int aktValue3 = array[indexOfNumerInbetweenConstrastDrops];
-            var contrast3 = largestInArray - aktValue3;
+            //y-Coord
+            // int yCoord = (int)(maxIndex / width);
 
-            if(contrast3 > 200)
+            //x-Coord
+            // int xCoord = (int)(maxIndex % width);
+            // Debug.Log("(x,y)= " + xCoord + "," + yCoord);
+            //Debug.Log("y= " + yCoord);
+            int xCoordOffset = 0;
+            int yCoordOffset = 0;
+
+            xCoordOffset = (xCoord - lastXcoord);
+            yCoordOffset = (yCoord - lastYcoord);
+            //Debug.Log("xOffset = " + xCoordOffset);
+            //Debug.Log("yOffset = " + yCoordOffset);
+
+            if (distances == null)
             {
-                xValueInPicLeft = indexOfNumerInbetweenConstrastDrops % width;
-                break;
+                return;
             }
 
-            int xValueForTrade = xValueInPicLeft;
-            int yValueForTrade = rowInPicture;
+            /*
+            bool thresholdBottomBool = false;
+            bool thresholdTopBool = false;
 
-            returnArray[0] = xValueForTrade;
-            returnArray[1] = yValueForTrade;
-        }
-
-        return returnArray;
-    } 
-
-    public int[] getElementsAroundHighValue(int indexOfLargestInArray, int width, ushort[] array)
-    {
-        int numSelectedRows = 50;
-        int numSelectedCols = 50;
-        int[] neededIndexes = null;
-
-        int startingXValue = indexOfLargestInArray - 1 - width;
-
-        for(int i=0; i < numSelectedRows; i++)
-        {
-            if(i==0)
+            //Check if Offset is big enough - Rauschunterdrückung
+            if (xCoordOffset > thresholdBottom || xCoordOffset < (thresholdBottom * -1) || yCoordOffset > thresholdBottom || yCoordOffset < (thresholdBottom * -1))
             {
-                for(int j = 0; j < numSelectedCols; j++)
+                thresholdBottomBool = true;
+            }
+
+            //Check if Offest is not too large 
+            if ((xCoordOffset < thresholdTop && (xCoordOffset > (thresholdTop * -1))) && (yCoordOffset < thresholdTop && (yCoordOffset > (thresholdTop * -1))))
+            {
+                thresholdTopBool = true;
+            }
+
+            //if is in between thresholds
+            if (thresholdTopBool && thresholdBottomBool)
+            {
+                lastXcoord = xCoord;
+                lastYcoord = yCoord;
+                //Debug.Log(xCoordOffset + " xOffset");
+                Debug.Log(yCoordOffset + " yOffset");
+                timer = 0;
+                //Debug.Log("Timer reset");
+            }
+            */
+
+
+            /*
+            int offset = (lastDist - aktDist) * 2;
+            if(offset > 400)
+            {
+                offset = 500;
+            }
+
+            lastDist = aktDist;
+            */
+            //Debug.Log(offset);
+
+            if (allowMoving)
+            {
+                Vector3 oldPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+                Vector3 newPos = new Vector3(xCoord, gameObject.transform.position.y, yCoord);
+                //Debug.Log("newPos: x=" + newPos.x + " z=" + newPos.z);
+                timer += Time.deltaTime;
+                transform.position = Vector3.Lerp(oldPos, newPos, timer / latency);
+            }
+            /*
+            //Vector3 newPos = new Vector3(gameObject.transform.position.x + xCoordOffset, 0, gameObject.transform.position.z + yCoordOffset);
+            float newZCoord = gameObject.transform.position.z + (xCoordOffset * 2);
+            if(newZCoord > 310 || newZCoord < -310)
+            {
+                if(newZCoord >= 0)
                 {
-                    int index = startingXValue + j;
-                    int length = neededIndexes.Length;
-                    neededIndexes[length - 1] = index;
+                    newZCoord = 310;
                 }
-            }
-            else
-            {
-                startingXValue += width;
-                for(int k = 0; k < numSelectedCols; k++)
+                else
                 {
-                    int index2 = startingXValue + k;
-                    int length = neededIndexes.Length;
-                    neededIndexes[length - 1] = index2;
+                    newZCoord = -310;
                 }
+                //Debug.Log("yOffset FIX!");
             }
+            */
+            /*
+            if (thresholdTopBool && thresholdBottomBool)
+            {
+                //gameObject.transform.position = Vector3.Lerp(oldPos, newPos, latency * Time.deltaTime);
+                //gameObject.transform.position = Vector3.Lerp(oldPos, newPos, 2);
+                //gameObject.transform.position = Vector3.MoveTowards(oldPos, newPos, latency * Time.deltaTime);
+                //gameObject.transform.position = newPos;
+                timer += Time.deltaTime;
+                Debug.Log("Lerping");
+                //Debug.Log(Time.deltaTime + " delta");
+                //Debug.Log(timer + " timer");
+                transform.position = Vector3.Lerp(oldPos, newPos, timer / latency);
+            }
+            */
         }
-
-        return neededIndexes;
     }
 
     //not perfecty but idea is right - little bit of jumping - mabye because of holding kinect in one hand

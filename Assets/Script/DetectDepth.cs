@@ -30,6 +30,9 @@ public class DetectDepth : MonoBehaviour {
     private int findHandIndex = 0;
     private int findHandCounter = 0;
 
+    [SerializeField]
+    private GameObject gameManager;
+
     private Renderer rend;
 
     // Use this for initialization
@@ -110,6 +113,8 @@ public class DetectDepth : MonoBehaviour {
                     findHandIndex = aktIndex;
                     foundHand = true;
                     rend.enabled = true;
+                    gameManager.GetComponent<GameLogic>().DetectPlayer(1);
+                    
                 }
 
                 findHandX = aktHandX;

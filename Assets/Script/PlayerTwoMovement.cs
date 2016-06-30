@@ -31,6 +31,10 @@ public class PlayerTwoMovement : MonoBehaviour
     private int findHandIndex = 0;
     private int findHandCounter = 0;
 
+    [SerializeField]
+    private GameObject gameManager;
+
+
     private Renderer rend;
 
     // Use this for initialization
@@ -115,6 +119,7 @@ public class PlayerTwoMovement : MonoBehaviour
                     findHandIndex = aktIndex;
                     foundHand = true;
                     rend.enabled = true;
+                    gameManager.GetComponent<GameLogic>().DetectPlayer(2);
                 }
 
                 findHandX = aktHandX;
